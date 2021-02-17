@@ -14,7 +14,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
         tools:targetApi="m">
-        <activity android:name=".View.MainActivity">
+        <activity
+            android:name=".View.Main.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
