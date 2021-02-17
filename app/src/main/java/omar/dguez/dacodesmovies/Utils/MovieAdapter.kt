@@ -76,7 +76,7 @@ class MovieAdapter(private var movieList: List<Movie>?, private val viewPresente
         }
 
         fun bind(movie: Movie) {
-            movieName?.text = movie.original_title
+            movieName?.text = movie.title
             movieDate?.text = movie.release_date
             movieRate?.text = movie.vote_average.toString()
             Picasso.get().load(url + movie.poster_path).into(movieImg)
