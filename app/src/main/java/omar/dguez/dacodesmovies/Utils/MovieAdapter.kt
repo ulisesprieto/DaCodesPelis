@@ -41,6 +41,10 @@ class MovieAdapter(private var movieList: List<Movie>?, private val viewPresente
         this.movieList = newList;
     }
 
+    fun joinLists(newList: List<Movie>) {
+        this.movieList = this.movieList?.plus(newList)
+    }
+
     class MyViewHolder(inflater: LayoutInflater, parent: ViewGroup, viewPresenter: MainPresenter) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.movie, parent, false)) {
         private val url = "https://image.tmdb.org/t/p/w500/"

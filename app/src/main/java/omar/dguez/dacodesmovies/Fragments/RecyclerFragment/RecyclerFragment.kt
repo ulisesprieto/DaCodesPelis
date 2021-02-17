@@ -1,6 +1,7 @@
 package omar.dguez.dacodesmovies.Fragments.RecyclerFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,9 +22,10 @@ class RecyclerFragment(viewPresenter: MainPresenter) : Fragment(),
     RecyclerFragmentView {
 
     private val presenter: RecyclerFragmentPresenter = RecyclerFragmentPresenter(this)
+    private val adapt = MovieAdapter(null, viewPresenter)
     private var swipe: SwipeRefreshLayout? = null
     private var recycler: RecyclerView? = null
-    private val adapt = MovieAdapter(null, viewPresenter)
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +44,19 @@ class RecyclerFragment(viewPresenter: MainPresenter) : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         swipe = view.findViewById(R.id.swipeRefresh)
         recycler = view.findViewById(R.id.recyclerView)
+        recycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) { // only when scrolling up
+                    val visibleThreshold = 2
+                    val layoutManager = recycler?.layoutManager as GridLayoutManager
+                    val lastItem = layoutManager.findLastCompletelyVisibleItemPosition()
+                    val currentTotalCount = layoutManager.itemCount
+                    if (currentTotalCount <= lastItem + visibleThreshold) {
+                        presenter.getData(fromSwipe = false, nextPage = true)
+                    }
+                }
+            }
+        })
         recycler?.apply {
             layoutManager = GridLayoutManager(activity!!.applicationContext, 2)
             adapter = adapt
@@ -56,13 +71,17 @@ class RecyclerFragment(viewPresenter: MainPresenter) : Fragment(),
         Toast.makeText(activity!!.applicationContext, "Error $msg", Toast.LENGTH_SHORT).show();
     }
 
-    override fun fillData(movieList: List<Movie>, fromSwipe: Boolean) {
-        adapt.update(movieList)
-        adapt.notifyDataSetChanged()
+    override fun fillData(current: Int, last: Int, movieList: List<Movie>, fromSwipe: Boolean) {
         if (fromSwipe) {
             swipe?.isRefreshing = false
         }
-
+        if (current == 1) {
+            adapt.update(movieList)
+            adapt.notifyDataSetChanged()
+        } else {
+            adapt.joinLists(movieList)
+            adapt.notifyDataSetChanged()
+        }
     }
 
     fun onReturn() {
