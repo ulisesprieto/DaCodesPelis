@@ -4,5 +4,5 @@ import omar.dguez.dacodesmovies.Models.Movie
 
 interface RecyclerFragmentView {
     fun failure(msg: String)
-    fun fillData(movieList: List<Movie>)
+    fun fillData(movieList: List<Movie>, fromSwipe: Boolean)
 }

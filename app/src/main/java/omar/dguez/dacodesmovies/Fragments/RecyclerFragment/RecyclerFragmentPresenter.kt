@@ -8,13 +8,17 @@ import retrofit2.Response
 
 class RecyclerFragmentPresenter(private val recyclerFragment: RecyclerFragmentView) :
     Callback<MovieObject> {
-    fun getData() {
+
+    private var fromSwipe: Boolean = false;
+
+    fun getData(fromSwipe: Boolean) {
+        this.fromSwipe = fromSwipe
         RestClient.instance.getMovies().enqueue(this)
     }
 
     override fun onResponse(call: Call<MovieObject>, response: Response<MovieObject>) {
         if (response.isSuccessful) {
-            recyclerFragment.fillData(response.body()!!.result)
+            recyclerFragment.fillData(response.body()!!.result, fromSwipe)
         }
     }
 

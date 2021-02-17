@@ -18,7 +18,7 @@ import omar.dguez.dacodesmovies.Models.Movie
 import omar.dguez.dacodesmovies.R
 
 
-class MovieAdapter(private val movieList: List<Movie>) :
+class MovieAdapter(private var movieList: List<Movie>?) :
     RecyclerView.Adapter<MovieAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,12 +29,23 @@ class MovieAdapter(private val movieList: List<Movie>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val movie: Movie = movieList[position]
-        holder.bind(movie)
+        if (movieList !== null) {
+            val movie: Movie = movieList!![position]
+            holder.bind(movie)
+        }
     }
 
-    override fun getItemCount(): Int = movieList.size;
+    override fun getItemCount(): Int {
+        return if (movieList !== null) {
+            movieList!!.size
+        } else {
+            0;
+        }
+    }
 
+    fun update(newList: List<Movie>) {
+        this.movieList = newList;
+    }
 
     class MyViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.movie, parent, false)) {
