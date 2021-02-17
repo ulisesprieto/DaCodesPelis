@@ -10,7 +10,7 @@ import retrofit2.Response
 class MovieDetailPresenter(private val movieDetail: MovieDetailView) : Callback<MovieSummary> {
 
     fun fetchMovie(movieId: Int) {
-        RestClient.instance.getMovie(movieId).enqueue(this)
+        RestClient.instance.getMovie(movieId,"a28c4bc831b590dc669ef8a459fdbff7","es-MX").enqueue(this)
     }
 
     override fun onResponse(call: Call<MovieSummary>, response: Response<MovieSummary>) {

@@ -11,9 +11,10 @@ class RecyclerFragmentPresenter(private val recyclerFragment: RecyclerFragmentVi
 
     private var fromSwipe: Boolean = false;
 
-    fun getData(fromSwipe: Boolean) {
+    fun getData(fromSwipe: Boolean, page: Int = 1) {
         this.fromSwipe = fromSwipe
-        RestClient.instance.getMovies().enqueue(this)
+        RestClient.instance.getMovies("a28c4bc831b590dc669ef8a459fdbff7", "es-MX", page)
+            .enqueue(this)
     }
 
     override fun onResponse(call: Call<MovieObject>, response: Response<MovieObject>) {

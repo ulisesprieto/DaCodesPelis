@@ -6,20 +6,28 @@ import omar.dguez.dacodesmovies.Models.MovieObject
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ClientInterface {
     /**
      * Get Movies
      * @see getMovies
      */
-    @GET("now_playing?api_key=a28c4bc831b590dc669ef8a459fdbff7&language=es-MX")
-    fun getMovies(): Call<MovieObject>
+    @GET("now_playing")
+    fun getMovies(
+        @Query("api_key") api_key: String,
+        @Query("language") language: String,
+        @Query("page") page: Int,
+    ): Call<MovieObject>
+
     /**
      * Get Movie
      * @see getMovie
      */
-    @GET("{id}?api_key=a28c4bc831b590dc669ef8a459fdbff7&language=es-MX")
+    @GET("{id}")
     fun getMovie(
-        @Path("id") id: Int
+        @Path("id") id: Int,
+        @Query("api_key") api_key: String,
+        @Query("language") language: String,
     ): Call<MovieSummary>
 }
