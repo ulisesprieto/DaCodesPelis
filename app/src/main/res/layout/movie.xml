@@ -6,16 +6,23 @@
     android:layout_height="180dp"
     android:layout_marginBottom="@dimen/spacing"
     app:cardCornerRadius="8dp">
-    <!-- Background image -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cardContainer"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!-- Background with opacity -->
+
+        <ImageView
+            android:id="@+id/movieImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/movieimg"
+            android:scaleType="centerCrop" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/infoContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:background="#B7000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +70,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

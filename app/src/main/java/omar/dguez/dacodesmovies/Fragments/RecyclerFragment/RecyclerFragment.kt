@@ -1,7 +1,6 @@
 package omar.dguez.dacodesmovies.Fragments.RecyclerFragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +37,11 @@ class RecyclerFragment : Fragment(), RecyclerFragmentView {
         super.onViewCreated(view, savedInstanceState)
         swipe = view.findViewById(R.id.swipeRefresh)
         recycler = view.findViewById(R.id.recyclerView)
+        recycler?.apply {
+            layoutManager = GridLayoutManager(activity!!.applicationContext, 2)
+            adapter = adapt
+            setHasFixedSize(true)
+        }
         swipe?.setOnRefreshListener {
             presenter.getData(true)
         }
@@ -50,13 +54,7 @@ class RecyclerFragment : Fragment(), RecyclerFragmentView {
     override fun fillData(movieList: List<Movie>, fromSwipe: Boolean) {
         adapt.update(movieList)
         adapt.notifyDataSetChanged()
-        if (!fromSwipe) {
-            recycler?.apply {
-                layoutManager = GridLayoutManager(activity, 2)
-                adapter = adapt
-                hasFixedSize()
-            }
-        } else {
+        if (fromSwipe) {
             swipe?.isRefreshing = false
         }
 

@@ -1,14 +1,13 @@
 package omar.dguez.dacodesmovies.Utils
 
 
-import android.R.attr
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -54,33 +53,20 @@ class MovieAdapter(private var movieList: List<Movie>?) :
         private var movieName: TextView? = null
         private var movieDate: TextView? = null
         private var movieRate: TextView? = null
-        private var movieImg: ConstraintLayout? = null
+        private var movieImg: ImageView? = null
 
         init {
             movieName = itemView.findViewById(R.id.movieName)
             movieDate = itemView.findViewById(R.id.movieDate)
             movieRate = itemView.findViewById(R.id.movieRate)
-            movieImg = itemView.findViewById(R.id.cardContainer)
+            movieImg = itemView.findViewById(R.id.movieImg)
         }
 
         fun bind(movie: Movie) {
             movieName?.text = movie.original_title
             movieDate?.text = movie.release_date
             movieRate?.text = movie.vote_average.toString()
-            //do a image
-            Picasso.get().load(url + movie.poster_path).into(object : Target {
-                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                    movieImg!!.background = BitmapDrawable(context.resources, bitmap)
-                }
-
-                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-                    Log.d("TAG", "FAILED");
-                }
-
-                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-                    Log.d("TAG", "Prepare Load");
-                }
-            })
+            Picasso.get().load(url + movie.poster_path).into(movieImg)
         }
     }
 }
