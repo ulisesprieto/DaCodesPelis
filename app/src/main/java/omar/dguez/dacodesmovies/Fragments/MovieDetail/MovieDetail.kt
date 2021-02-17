@@ -1,19 +1,19 @@
 package omar.dguez.dacodesmovies.Fragments.MovieDetail
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
 import omar.dguez.dacodesmovies.Models.MovieSummary
 import omar.dguez.dacodesmovies.R
 import omar.dguez.dacodesmovies.View.Main.MainPresenter
-import kotlin.math.round
 
 
 class MovieDetail(private val viewPresenter: MainPresenter) : Fragment(), MovieDetailView {
@@ -51,12 +51,27 @@ class MovieDetail(private val viewPresenter: MainPresenter) : Fragment(), MovieD
         detailDescr = activity!!.findViewById(R.id.detailDescr)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                activity!!.onBackPressed()
+                return true
+            }
+        }
+        return false
+    }
+
     override fun failure(msg: String) {
         Toast.makeText(activity!!.applicationContext, msg, Toast.LENGTH_SHORT).show()
     }
 
 
     override fun fetchMovie(movie: MovieSummary) {
+        val ab = (activity as AppCompatActivity?)!!.supportActionBar
+        if (ab !== null) {
+            ab.setDisplayHomeAsUpEnabled(true)
+            ab.title = "Detail Movie"
+        }
         var genres = ""
         val mins = " minutos"
         Picasso.get().load(url + movie.backdrop_path).into(detailImg)
@@ -73,10 +88,8 @@ class MovieDetail(private val viewPresenter: MainPresenter) : Fragment(), MovieD
 
     fun fetchingId() {
         val value = this.viewPresenter.getMovieId()
-        Log.d("RA", "$value")
         if (value !== null) {
             this.presenter.fetchMovie(value)
         }
-
     }
 }

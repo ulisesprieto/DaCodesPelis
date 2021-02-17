@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DaCodesMovies</string>
+    <string name="app_name">Movie App</string>
     <string name="movie_img">movie_img</string>
     <string name="movieimg">movieImg</string>
     <string name="imagedetail">imageDetail</string>

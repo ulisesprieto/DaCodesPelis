@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +29,7 @@ class RecyclerFragment(viewPresenter: MainPresenter) : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        onReturn()
         return inflater.inflate(R.layout.fragment_recycler, container, false)
     }
 
@@ -62,5 +65,13 @@ class RecyclerFragment(viewPresenter: MainPresenter) : Fragment(),
 
     }
 
+    fun onReturn() {
+        val ab: ActionBar? = (activity as AppCompatActivity?)!!.supportActionBar
+        setHasOptionsMenu(false)
+        if (ab !== null) {
+            ab.setDisplayHomeAsUpEnabled(false)
+            ab.title = "Movie App"
+        }
+    }
 
 }

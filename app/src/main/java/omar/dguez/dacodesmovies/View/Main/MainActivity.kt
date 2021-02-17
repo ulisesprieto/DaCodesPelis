@@ -30,11 +30,21 @@ class MainActivity : AppCompatActivity(), MainView {
         if (tagOne == "details") {
             presenter.fetchMovieId(movieId)
             fragmentTwo.fetchingId()
+        } else {
+            fragmentOne.onReturn()
         }
         manager.beginTransaction()
             .show(manager.findFragmentByTag(tagOne)!!)
             .hide(manager.findFragmentByTag(tagTwo)!!)
             .commit()
+    }
+
+    override fun onBackPressed() {
+        if (!fragmentOne.isHidden) {
+            super.onBackPressed()
+        } else {
+            changeFragment("recycler", "details", -1)
+        }
     }
 
 }
