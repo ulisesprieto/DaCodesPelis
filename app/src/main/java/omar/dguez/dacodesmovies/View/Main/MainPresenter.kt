@@ -1,17 +1,28 @@
 package omar.dguez.dacodesmovies.View.Main
 
-import omar.dguez.dacodesmovies.Models.Movie
-
-class MainPresenter(private val view: MainView) {
-    private var movieId: Int? = null
-
+/**
+ * Class MainPresenter
+ * @param view Triggers in view the interface methods
+ * @param movieId To get/set a movieId from selected movie
+ */
+class MainPresenter(private val view: MainView, private var movieId: Int) {
+    /**
+     * Handles the change of
+     * fragments in runtime
+     */
     fun switchFragment(tagOne: String, tagTwo: String, movieId: Int) {
-        view.changeFragment(tagOne, tagTwo, movieId)
+        this.view.changeFragment(tagOne, tagTwo, movieId)
     }
 
-    fun fetchMovieId(movieId: Int) {
+    /**
+     * Set the movieId
+     */
+    fun setMovieId(movieId: Int) {
         this.movieId = movieId
     }
 
-    fun getMovieId(): Int? = movieId
+    /**
+     * Get the movieId
+     */
+    fun getMovieId(): Int = movieId
 }

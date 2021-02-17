@@ -15,7 +15,10 @@ import omar.dguez.dacodesmovies.Models.MovieSummary
 import omar.dguez.dacodesmovies.R
 import omar.dguez.dacodesmovies.View.Main.MainPresenter
 
-
+/**
+ * MovieDetail
+ * @param viewPresenter from MainActivity to handle fragment visibility changes
+ */
 class MovieDetail(private val viewPresenter: MainPresenter) : Fragment(), MovieDetailView {
 
     private val presenter: MovieDetailPresenter = MovieDetailPresenter(this)
@@ -40,32 +43,42 @@ class MovieDetail(private val viewPresenter: MainPresenter) : Fragment(), MovieD
         return inflater.inflate(R.layout.fragment_movie_detail, container, false)
     }
 
+    /**
+     * Generates the values for each view instance
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        detailImg = activity!!.findViewById(R.id.detailImg)
-        detailTitle = activity!!.findViewById(R.id.detailTitle)
-        detailDuration = activity!!.findViewById(R.id.detailDuration)
-        detailDate = activity!!.findViewById(R.id.detailDate)
-        detailClass = activity!!.findViewById(R.id.detailClass)
-        detailGenre = activity!!.findViewById(R.id.detailGenre)
-        detailDescr = activity!!.findViewById(R.id.detailDescr)
+        if (activity !== null) {
+            this.detailImg = activity?.findViewById(R.id.detailImg)
+            this.detailTitle = activity?.findViewById(R.id.detailTitle)
+            this.detailDuration = activity?.findViewById(R.id.detailDuration)
+            this.detailDate = activity?.findViewById(R.id.detailDate)
+            this.detailClass = activity?.findViewById(R.id.detailClass)
+            this.detailGenre = activity?.findViewById(R.id.detailGenre)
+            this.detailDescr = activity?.findViewById(R.id.detailDescr)
+        }
     }
 
+    /**
+     * Behavior of go to the main fragment
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                activity!!.onBackPressed()
+                if (activity !== null) {
+                    activity?.onBackPressed()
+                }
                 return true
             }
         }
         return false
     }
 
-    override fun failure(msg: String) {
-        Toast.makeText(activity!!.applicationContext, msg, Toast.LENGTH_SHORT).show()
-    }
-
-
+    /**
+     * Triggered after a call from MainActivity the fetchId method,
+     * will render all the data, and set the actionBar to a proper config
+     * @param movie It's the summary of the movie
+     */
     override fun fetchMovie(movie: MovieSummary) {
         val ab = (activity as AppCompatActivity?)!!.supportActionBar
         if (ab !== null) {
@@ -74,22 +87,29 @@ class MovieDetail(private val viewPresenter: MainPresenter) : Fragment(), MovieD
         }
         var genres = ""
         val mins = " minutos"
-        Picasso.get().load(url + movie.backdrop_path).into(detailImg)
-        detailTitle?.text = movie.title
-        detailDuration?.text = (movie.runtime.toString() + mins)
-        detailDate?.text = movie.release_date
-        detailClass?.text = movie.vote_average.toString()
+        Picasso.get().load(this.url + movie.backdrop_path).into(this.detailImg)
+        this.detailTitle?.text = movie.title
+        this.detailDuration?.text = (movie.runtime.toString() + mins)
+        this.detailDate?.text = movie.release_date
+        this.detailClass?.text = movie.vote_average.toString()
         for (item in movie.genres) {
             genres += "${item.name}   "
         }
-        detailGenre?.text = genres
-        detailDescr?.text = movie.overview
+        this.detailGenre?.text = genres
+        this.detailDescr?.text = movie.overview
     }
 
+    /**
+     * Triggered from the MainActivity
+     * to receive the event listener movieId
+     */
     fun fetchingId() {
         val value = this.viewPresenter.getMovieId()
-        if (value !== null) {
-            this.presenter.fetchMovie(value)
-        }
+        this.presenter.fetchMovie(value)
     }
+
+    override fun failure(msg: String) {
+        Toast.makeText(activity!!.applicationContext, msg, Toast.LENGTH_SHORT).show()
+    }
+
 }
