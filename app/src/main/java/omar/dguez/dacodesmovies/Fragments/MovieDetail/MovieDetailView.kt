@@ -1,4 +1,9 @@
 package omar.dguez.dacodesmovies.Fragments.MovieDetail
 
-class MovieDetailView {
+
+import omar.dguez.dacodesmovies.Models.MovieSummary
+
+interface MovieDetailView {
+    fun failure(msg: String)
+    fun fetchMovie(movie: MovieSummary)
 }

@@ -1,14 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/s16"
     tools:context=".Fragments.MovieDetail.MovieDetail">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/s8">
+
+            <ImageView
+                android:id="@+id/detailImg"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:contentDescription="@string/imagedetail"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/detailTitle"
+            style="@style/TextInfoTitle" />
+        <!-- Label / Value -->
+        <TextView
+            style="@style/TextInfoSubtitle"
+            android:text="@string/duration" />
+
+        <TextView
+            android:id="@+id/detailDuration"
+            style="@style/TextInfo" />
+
+        <TextView
+            style="@style/TextInfoSubtitle"
+            android:text="@string/release_date" />
+
+        <TextView
+            android:id="@+id/detailDate"
+            style="@style/TextInfo" />
+
+        <TextView
+            style="@style/TextInfoSubtitle"
+            android:text="@string/clasification" />
+
+        <TextView
+            android:id="@+id/detailClass"
+            style="@style/TextInfo" />
+
+
+        <TextView
+            style="@style/TextInfoSubtitle"
+            android:text="@string/generos" />
+
+        <TextView
+            android:id="@+id/detailGenre"
+            style="@style/TextInfo" />
+
+        <TextView
+            style="@style/TextInfoSubtitle"
+            android:text="@string/test" />
+
+
+        <TextView
+            android:id="@+id/detailDescr"
+            style="@style/TextInfo"
+             />
+
+    </LinearLayout>
+
 
 </FrameLayout>

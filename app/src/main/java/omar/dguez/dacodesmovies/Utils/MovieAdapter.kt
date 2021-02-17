@@ -1,30 +1,25 @@
 package omar.dguez.dacodesmovies.Utils
 
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import omar.dguez.dacodesmovies.Models.Movie
 import omar.dguez.dacodesmovies.R
+import omar.dguez.dacodesmovies.View.Main.MainPresenter
 
 
-class MovieAdapter(private var movieList: List<Movie>?) :
+class MovieAdapter(private var movieList: List<Movie>?, private val viewPresenter: MainPresenter) :
     RecyclerView.Adapter<MovieAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return MyViewHolder(inflater, parent)
+        return MyViewHolder(inflater, parent, viewPresenter)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -46,10 +41,10 @@ class MovieAdapter(private var movieList: List<Movie>?) :
         this.movieList = newList;
     }
 
-    class MyViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+    class MyViewHolder(inflater: LayoutInflater, parent: ViewGroup, viewPresenter: MainPresenter) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.movie, parent, false)) {
-        private val context = parent.context;
         private val url = "https://image.tmdb.org/t/p/w500/"
+        private val presenter: MainPresenter = viewPresenter;
         private var movieName: TextView? = null
         private var movieDate: TextView? = null
         private var movieRate: TextView? = null
@@ -67,6 +62,9 @@ class MovieAdapter(private var movieList: List<Movie>?) :
             movieDate?.text = movie.release_date
             movieRate?.text = movie.vote_average.toString()
             Picasso.get().load(url + movie.poster_path).into(movieImg)
+            movieImg?.setOnClickListener {
+                presenter.switchFragment("details", "recycler", movie.id)
+            }
         }
     }
 }

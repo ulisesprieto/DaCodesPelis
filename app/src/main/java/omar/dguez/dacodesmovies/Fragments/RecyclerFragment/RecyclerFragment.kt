@@ -12,14 +12,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import omar.dguez.dacodesmovies.Models.Movie
 import omar.dguez.dacodesmovies.R
 import omar.dguez.dacodesmovies.Utils.MovieAdapter
+import omar.dguez.dacodesmovies.View.Main.MainPresenter
 
 
-class RecyclerFragment : Fragment(), RecyclerFragmentView {
+class RecyclerFragment(viewPresenter: MainPresenter) : Fragment(),
+    RecyclerFragmentView {
 
     private val presenter: RecyclerFragmentPresenter = RecyclerFragmentPresenter(this)
     private var swipe: SwipeRefreshLayout? = null
     private var recycler: RecyclerView? = null
-    private val adapt = MovieAdapter(null)
+    private val adapt = MovieAdapter(null, viewPresenter)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

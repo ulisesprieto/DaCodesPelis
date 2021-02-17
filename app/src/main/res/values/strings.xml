@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">DaCodesMovies</string>
     <string name="movie_img">movie_img</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="movieimg">movieImg</string>
+    <string name="imagedetail">imageDetail</string>
+    <string name="duration">Duración:</string>
+    <string name="release_date">Fecha de estreno:</string>
+    <string name="clasification">Calificación:</string>
+    <string name="generos">Generos:</string>
+    <string name="test">Descripción:</string>
 </resources>
