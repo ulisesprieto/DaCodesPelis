@@ -11,9 +11,16 @@ import omar.dguez.dacodesmovies.Models.Movie
 import omar.dguez.dacodesmovies.R
 import omar.dguez.dacodesmovies.View.Main.MainPresenter
 
-
+/**
+ * MovieAdapter
+ * @param movieList comes from updates/joins and starts in null
+ * @param viewPresenter required to trigger the onClick listener over the MainActivity switch fragment logic
+ */
 class MovieAdapter(private var movieList: List<Movie>?, private val viewPresenter: MainPresenter) :
     RecyclerView.Adapter<MovieAdapter.MyViewHolder>() {
+    /**
+     * Inflates the viewHolder
+     */
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -22,6 +29,10 @@ class MovieAdapter(private var movieList: List<Movie>?, private val viewPresente
         return MyViewHolder(inflater, parent, viewPresenter)
     }
 
+    /**
+     * Triggers the viewHolder bind for render
+     * and event listener purposes, one movie at a time
+     */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         if (movieList !== null) {
             val movie: Movie = movieList!![position]
@@ -33,7 +44,7 @@ class MovieAdapter(private var movieList: List<Movie>?, private val viewPresente
         return if (movieList !== null) {
             movieList!!.size
         } else {
-            0;
+            -1
         }
     }
 
@@ -45,6 +56,9 @@ class MovieAdapter(private var movieList: List<Movie>?, private val viewPresente
         this.movieList = this.movieList?.plus(newList)
     }
 
+    /**
+     * MyViewHolder
+     */
     class MyViewHolder(inflater: LayoutInflater, parent: ViewGroup, viewPresenter: MainPresenter) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.movie, parent, false)) {
         private val url = "https://image.tmdb.org/t/p/w500/"
