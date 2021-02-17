@@ -4,6 +4,7 @@
     android:id="@+id/cardView"
     android:layout_width="180dp"
     android:layout_height="180dp"
+    android:layout_marginBottom="@dimen/spacing"
     app:cardCornerRadius="8dp">
     <!-- Background image -->
     <androidx.constraintlayout.widget.ConstraintLayout
