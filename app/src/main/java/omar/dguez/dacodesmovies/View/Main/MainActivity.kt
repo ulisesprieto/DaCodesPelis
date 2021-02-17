@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), MainView {
      */
     override fun changeFragment(tagOne: String, tagTwo: String, movieId: Int) {
         if (tagOne == "details") {
-            this.presenter
+            this.presenter.fetchMovieId(movieId)
             this.fragmentTwo.fetchingId()
         } else {
             this.fragmentOne.onReturn()

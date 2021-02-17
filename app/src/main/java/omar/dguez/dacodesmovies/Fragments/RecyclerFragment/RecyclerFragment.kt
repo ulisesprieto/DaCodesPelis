@@ -38,7 +38,7 @@ class RecyclerFragment(viewPresenter: MainPresenter) : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        this.onReturn()
+        onReturn()
         return inflater.inflate(R.layout.fragment_recycler, container, false)
     }
 

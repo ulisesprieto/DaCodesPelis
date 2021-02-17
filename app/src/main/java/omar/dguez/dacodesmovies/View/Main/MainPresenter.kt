@@ -17,7 +17,7 @@ class MainPresenter(private val view: MainView, private var movieId: Int) {
     /**
      * Set the movieId
      */
-    fun setMovieId(movieId: Int) {
+    fun fetchMovieId(movieId: Int) {
         this.movieId = movieId
     }
 
